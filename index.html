@@ -1,0 +1,242 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pedido Especial</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to top, #ffdee9, #b5fffc);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .container {
+      background: white;
+      border-radius: 20px;
+      padding: 40px 30px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      text-align: center;
+      max-width: 700px;
+    }
+
+    h1 {
+      font-family: 'Pacifico', cursive;
+      font-size: 2.5em;
+      color: #d6336c;
+    }
+
+    .hearts {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .heart-option {
+      font-size: 2em;
+      margin: 10px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .heart-option:hover {
+      transform: scale(1.3);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    input[type="text"] {
+      padding: 10px;
+      border-radius: 10px;
+      border: 2px solid #ccc;
+      width: 60%;
+      font-size: 1em;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px 25px;
+      background-color: #e91e63;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 1em;
+      cursor: pointer;
+    }
+
+    #audioPlayer {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+    }
+  </style>
+</head>
+<body>
+  <audio id="audioPlayer" autoplay loop>
+    <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mp3">
+    Seu navegador não suporta áudio.
+  </audio>
+
+  <div class="container" id="fase1">
+    <h1>Encontre o coração certo 💗</h1>
+    <div class="hearts">
+      <span class="heart-option">💙</span>
+      <span class="heart-option">💛</span>
+      <span class="heart-option">💚</span>
+      <span class="heart-option" id="certo">❤️</span>
+      <span class="heart-option">🧡</span>
+      <span class="heart-option">💜</span>
+    </div>
+    <p id="msgFase1"></p>
+  </div>
+
+  <div class="container hidden" id="fase2">
+    <h1>Digite a palavra mágica ✨</h1>
+    <p>Dica: é como eu te chamo quando você tá de cara fechada 😅</p>
+    <input type="text" id="senha" placeholder="Digite aqui..." />
+    <button onclick="verificarSenha()">Confirmar</button>
+    <p id="msgSenha"></p>
+  </div>
+
+  <div class="container hidden" id="fase3">
+    <h1>Era uma vez... ❤</h1>
+    <div id="conteudo"></div>
+    <div id="botoes"></div>
+  </div>
+
+  <script>
+    const coracaoCerto = document.getElementById('certo');
+    const fase1 = document.getElementById('fase1');
+    const fase2 = document.getElementById('fase2');
+    const fase3 = document.getElementById('fase3');
+    const msgFase1 = document.getElementById('msgFase1');
+
+    coracaoCerto.onclick = () => {
+      fase1.classList.add('hidden');
+      fase2.classList.remove('hidden');
+    };
+
+    const senhaCorreta = "brava";
+    function verificarSenha() {
+      const input = document.getElementById('senha').value.trim().toLowerCase();
+      const msg = document.getElementById('msgSenha');
+
+      if (input === senhaCorreta) {
+        fase2.classList.add('hidden');
+        fase3.classList.remove('hidden');
+        mostrarIntro(paginaAtual);
+      } else {
+        msg.textContent = "Hmm... tenta lembrar direitinho 🥺";
+      }
+    }
+
+    const conteudo = document.getElementById('conteudo');
+    const botoes = document.getElementById('botoes');
+    const paginasIntro = [
+      `Eu sei que nem sempre fui o melhor pra você... Já errei demais, e muitas vezes joguei fora as chances que você me deu.<br><br>Mas sabe, de verdade, não foi por falta de amor, foi só que eu tava meio perdido às vezes.`,
+      `Você tem esse jeitinho bravo, menina brava, que eu amo demais... Mesmo quando fica séria comigo, só mostra o quanto você se importa, e isso me inspira a ser melhor pra você.`,
+      `Por isso, hoje, aqui, eu faço um pedido diferente.<br><br>Se você disser "sim", prometo que vou fazer você a mulher mais feliz desse mundo. Tá pronta pra essa aventura comigo?`
+    ];
+
+    const paginaPedido = `
+      <p>Desde o primeiro dia, mesmo de longe, você conquistou meu coração com o seu jeitinho único. Cada conversa, cada risada, cada momento contigo se tornou parte da história mais bonita que já vivi.</p>
+      <p>À distância, nosso amor provou que a conexão verdadeira não conhece barreiras. Mesmo separados por telas, te sinto perto em cada detalhe do meu dia. Você me inspira, me acalma e me faz querer ser melhor.</p>
+      <p style="font-size: 1.6em; margin: 30px 0; color: #d6336c; font-weight: 700;">Quer namorar comigo? 💍💗</p>
+    `;
+
+    let paginaAtual = 0;
+
+    function mostrarIntro(pagina) {
+      conteudo.innerHTML = paginasIntro[pagina];
+      botoes.innerHTML = '';
+
+      if (pagina > 0) {
+        const botaoVoltar = document.createElement('button');
+        botaoVoltar.textContent = 'Voltar';
+        botaoVoltar.onclick = () => {
+          paginaAtual--;
+          mostrarIntro(paginaAtual);
+        };
+        botoes.appendChild(botaoVoltar);
+      }
+
+      if (pagina < paginasIntro.length -1) {
+        const botaoProximo = document.createElement('button');
+        botaoProximo.textContent = 'Próximo';
+        botaoProximo.onclick = () => {
+          paginaAtual++;
+          mostrarIntro(paginaAtual);
+        };
+        botoes.appendChild(botaoProximo);
+      } else {
+        const botaoContinuar = document.createElement('button');
+        botaoContinuar.textContent = 'Continuar';
+        botaoContinuar.onclick = () => {
+          mostrarPedido();
+        };
+        botoes.appendChild(botaoContinuar);
+      }
+    }
+
+    function mostrarPedido() {
+      conteudo.innerHTML = paginaPedido;
+      botoes.innerHTML = '';
+
+      const botaoSim = document.createElement('button');
+      botaoSim.textContent = 'Sim, quero! 💖';
+      botaoSim.onclick = () => {
+        conteudo.innerHTML = `<h2 style='color: #d6336c;'>Você acaba de deixar alguém MUITO feliz! 🥹💘</h2><p>Prometo cuidar de você e fazer nossos dias inesquecíveis.</p><p style='font-size: 2em; margin-top: 40px;'>💍❤️</p>`;
+        botoes.innerHTML = '';
+      };
+
+      const botaoNao = document.createElement('button');
+      botaoNao.textContent = 'Não, acho que não';
+      botaoNao.onclick = respostaNao;
+
+      botoes.appendChild(botaoSim);
+      botoes.appendChild(botaoNao);
+    }
+
+    let naoClickCount = 0;
+    function respostaNao() {
+      const frases = [
+        'Ops! Parece que apertou no botão errado, bobinha! 😜',
+        'Opa, errou de novo! Tá difícil, hein? 😂',
+        'Sério mesmo? Vai tentar outra vez? Eu acredito! 😆',
+        'Tá teimando demais, viu! Mas tudo bem, tenta mais uma! 🤪',
+        'Ok, ok, última chance! Quero ver essa coragem! 😏'
+      ];
+
+      const msg = frases[Math.min(naoClickCount, frases.length -1)];
+      naoClickCount++;
+
+      conteudo.innerHTML = `<p style="font-size: 1.4em; color: #aa0033;">${msg}<br><br>Dá pra tentar de novo, eu acredito em você!</p>`;
+      botoes.innerHTML = '';
+
+      const botaoTentar = document.createElement('button');
+      botaoTentar.textContent = 'Tentar de novo';
+      botaoTentar.onclick = () => {
+        if (naoClickCount >= frases.length) naoClickCount = 0;
+        mostrarPedido();
+      };
+
+      botoes.appendChild(botaoTentar);
+    }
+  </script>
+</body>
+</html>
