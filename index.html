@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Pedido Especial</title>
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet" />
   <style>
     * {
       margin: 0;
@@ -14,305 +14,386 @@
     }
 
     body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #ffafbd, #ffc3a0);
+      font-family: 'Pacifico', cursive;
+      background: linear-gradient(to top, #ffdee9, #b5fffc);
+      color: #333;
+      overflow: hidden;
       min-height: 100vh;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-      overflow: hidden;
-      color: #4a2c3a;
+      padding: 20px;
     }
 
     .container {
-      background: rgba(255, 255, 255, 0.9);
-      border-radius: 25px;
-      padding: 40px 35px;
-      box-shadow: 0 15px 40px rgba(255, 105, 180, 0.3);
+      background: white;
+      max-width: 700px;
+      border-radius: 20px;
+      padding: 40px 30px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
       text-align: center;
-      max-width: 720px;
-      animation: fadeInUp 1s ease forwards;
-      user-select: none;
+      position: relative;
+      overflow: visible;
     }
 
     h1 {
-      font-family: 'Dancing Script', cursive;
-      font-size: 3em;
+      font-size: 2.8em;
+      margin-bottom: 20px;
       color: #d6336c;
-      margin-bottom: 25px;
-      text-shadow: 1px 1px 4px #ffa1c6;
     }
 
-    .hearts {
-      display: flex;
-      flex-wrap: wrap;
+    p {
+      margin-bottom: 25px;
+      font-size: 1.3em;
+      line-height: 1.8em;
+      transition: opacity 0.5s ease;
+    }
+
+    .heart-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 60px);
+      grid-gap: 15px;
       justify-content: center;
-      margin-top: 15px;
-      gap: 18px;
+      margin: 20px 0;
     }
 
     .heart-option {
-      font-size: 3.2em;
-      margin: 10px;
+      font-size: 2em;
       cursor: pointer;
-      transition: transform 0.3s ease, filter 0.3s ease;
+      transition: transform 0.2s;
       user-select: none;
-      filter: drop-shadow(0 0 2px #d6336c88);
-      border-radius: 50%;
-      padding: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     .heart-option:hover {
-      transform: scale(1.4) rotate(-10deg);
-      filter: drop-shadow(0 0 8px #d6336c);
-      animation: pulse 1.2s infinite;
+      transform: scale(1.3) rotate(10deg);
+      filter: drop-shadow(0 0 6px #ff497c);
     }
 
-    .hidden {
-      display: none;
+    .heart-pulse {
+      animation: pulse 0.6s ease forwards;
     }
 
-    input[type="text"] {
-      padding: 14px 15px;
-      border-radius: 15px;
-      border: 2px solid #d6336c;
-      width: 65%;
-      font-size: 1.2em;
-      font-weight: 600;
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.5); }
+      100% { transform: scale(1); }
+    }
+
+    input[type="password"] {
+      padding: 10px;
+      font-size: 1em;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      width: 220px;
       text-align: center;
-      color: #4a2c3a;
-      box-shadow: 0 0 10px #ffa1c6aa;
-      transition: border-color 0.3s ease;
+      margin-bottom: 15px;
+      transition: box-shadow 0.3s ease;
     }
 
-    input[type="text"]:focus {
+    input[type="password"]:focus {
       outline: none;
-      border-color: #ff4d94;
-      box-shadow: 0 0 15px #ff4d94cc;
+      box-shadow: 0 0 10px #d6336c;
+      border-color: #d6336c;
     }
 
     button {
-      margin-top: 28px;
-      padding: 12px 32px;
-      background: linear-gradient(45deg, #ff4d94, #d6336c);
-      color: white;
-      border: none;
-      border-radius: 20px;
-      font-size: 1.2em;
-      font-weight: 700;
       cursor: pointer;
-      box-shadow: 0 6px 15px #ff4d9499;
-      transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+      border: none;
+      border-radius: 15px;
+      padding: 15px 30px;
+      font-size: 1.2em;
+      margin: 10px;
+      font-weight: 600;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
       user-select: none;
     }
 
     button:hover {
-      background: linear-gradient(45deg, #d6336c, #ff4d94);
-      transform: translateY(-3px);
-      box-shadow: 0 10px 20px #ff4d94cc;
+      box-shadow: 0 0 12px 3px rgba(255, 105, 180, 0.7);
     }
 
-    #audioPlayer {
+    #sim {
+      background-color: #ff69b4;
+      color: white;
+    }
+
+    #sim:hover {
+      background-color: #ff1493;
+    }
+
+    #nao {
+      background-color: #999999;
+      color: white;
+    }
+
+    #nao:hover {
+      background-color: #666666;
+      box-shadow: 0 0 12px 3px rgba(102, 102, 102, 0.7);
+    }
+
+    #avancar {
+      background-color: #e91e63;
+      color: white;
+    }
+
+    #avancar:hover {
+      background-color: #b8134a;
+    }
+
+    audio {
       position: absolute;
-      top: 12px;
-      left: 12px;
-      filter: drop-shadow(0 0 4px #d6336c);
-      border-radius: 10px;
-      outline: none;
-      cursor: pointer;
-      user-select: none;
+      bottom: 10px;
+      left: 10px;
     }
 
-    p {
-      margin-top: 18px;
-      font-size: 1.2em;
-      line-height: 1.5;
-      color: #6e3a54;
-      user-select: none;
+    /* Confetti container */
+    #confetti-container {
+      pointer-events: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+      z-index: 100;
     }
 
-    #botoes button {
-      margin: 15px 12px 0 12px;
-      min-width: 140px;
+    .confetti {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background-color: #d6336c;
+      opacity: 0.8;
+      transform-origin: center;
+      animation: confetti-fall linear forwards;
+      border-radius: 3px;
+      filter: drop-shadow(0 0 2px #ff6f91);
     }
 
-    /* Animações */
-
-    @keyframes pulse {
-      0%, 100% {
-        transform: scale(1.4) rotate(-10deg);
-        filter: drop-shadow(0 0 8px #d6336c);
-      }
-      50% {
-        transform: scale(1.5) rotate(-10deg);
-        filter: drop-shadow(0 0 14px #ff6a8d);
-      }
-    }
-
-    @keyframes fadeInUp {
+    @keyframes confetti-fall {
       0% {
-        opacity: 0;
-        transform: translateY(30px);
+        opacity: 1;
+        transform: translateY(0) rotate(0deg);
       }
       100% {
-        opacity: 1;
-        transform: translateY(0);
+        opacity: 0;
+        transform: translateY(600px) rotate(360deg);
       }
     }
 
   </style>
 </head>
 <body>
-  <audio id="audioPlayer" autoplay loop>
-    <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mp3" />
-    Seu navegador não suporta áudio.
-  </audio>
-
-  <div class="container" id="fase1">
-    <h1>Encontre o coração certo 💗</h1>
-    <div class="hearts">
-      <span class="heart-option">💙</span>
-      <span class="heart-option">💛</span>
-      <span class="heart-option">💚</span>
-      <span class="heart-option" id="certo">❤️</span>
-      <span class="heart-option">🧡</span>
-      <span class="heart-option">💜</span>
+  <div class="container" id="app">
+    <h1>Vamos brincar? ❤️</h1>
+    <div id="content">
+      <p>Encontre o coração certo para começar nossa história.</p>
+      <div class="heart-grid" id="heartGrid"></div>
     </div>
-    <p id="msgFase1"></p>
-  </div>
-
-  <div class="container hidden" id="fase2">
-    <h1>Digite a palavra mágica ✨</h1>
-    <p>Dica: é como eu te chamo quando você tá de cara fechada 😅</p>
-    <input type="text" id="senha" placeholder="Digite aqui..." />
-    <button onclick="verificarSenha()">Confirmar</button>
-    <p id="msgSenha"></p>
-  </div>
-
-  <div class="container hidden" id="fase3">
-    <h1>Era uma vez... ❤</h1>
-    <div id="conteudo"></div>
-    <div id="botoes"></div>
+    <div id="buttons"></div>
+    <div id="confetti-container"></div>
+    <audio id="music" autoplay loop>
+      <source src="https://cdn.pixabay.com/download/audio/2022/10/19/audio_4b8fb8fb03.mp3?filename=romantic-piano-ambient-121997.mp3" type="audio/mpeg" />
+    </audio>
+    <audio id="click-sound" src="https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg" preload="auto"></audio>
+    <audio id="success-sound" src="https://actions.google.com/sounds/v1/cartoon/clang_and_wobble.ogg" preload="auto"></audio>
   </div>
 
   <script>
-    const coracaoCerto = document.getElementById('certo');
-    const fase1 = document.getElementById('fase1');
-    const fase2 = document.getElementById('fase2');
-    const fase3 = document.getElementById('fase3');
-    const msgFase1 = document.getElementById('msgFase1');
+    const app = document.getElementById("app");
+    const content = document.getElementById("content");
+    const buttons = document.getElementById("buttons");
+    const confettiContainer = document.getElementById("confetti-container");
+    const clickSound = document.getElementById("click-sound");
+    const successSound = document.getElementById("success-sound");
 
-    coracaoCerto.onclick = () => {
-      fase1.classList.add('hidden');
-      fase2.classList.remove('hidden');
-    };
+    // Etapa 1: coração certo
+    const coracaoCerto = Math.floor(Math.random() * 12);
+    const heartGrid = document.getElementById("heartGrid");
 
-    const senhaCorreta = "brava";
-    function verificarSenha() {
-      const input = document.getElementById('senha').value.trim().toLowerCase();
-      const msg = document.getElementById('msgSenha');
-
-      if (input === senhaCorreta) {
-        fase2.classList.add('hidden');
-        fase3.classList.remove('hidden');
-        mostrarIntro(paginaAtual);
-      } else {
-        msg.textContent = "Hmm... tenta lembrar direitinho 🥺";
+    function criarGrade() {
+      heartGrid.innerHTML = "";
+      for (let i = 0; i < 12; i++) {
+        const heart = document.createElement("div");
+        heart.className = "heart-option";
+        heart.innerHTML = "❤️";
+        heart.onclick = () => {
+          clickSound.play();
+          if (i === coracaoCerto) {
+            heart.classList.add("heart-pulse");
+            successSound.play();
+            setTimeout(() => mostrarSenha(), 650);
+          } else {
+            heart.innerHTML = "💔";
+            heart.style.pointerEvents = "none";
+          }
+        };
+        heartGrid.appendChild(heart);
       }
     }
 
-    const conteudo = document.getElementById('conteudo');
-    const botoes = document.getElementById('botoes');
-    const paginasIntro = [
+    // Função para aplicar efeito fade no content e buttons
+    function fadeOut(element, callback) {
+      element.style.opacity = 1;
+      let opacity = 1;
+      const fadeEffect = setInterval(() => {
+        if (opacity <= 0) {
+          clearInterval(fadeEffect);
+          callback();
+          fadeIn(element);
+        } else {
+          opacity -= 0.1;
+          element.style.opacity = opacity;
+        }
+      }, 30);
+    }
+
+    function fadeIn(element) {
+      element.style.opacity = 0;
+      let opacity = 0;
+      const fadeEffect = setInterval(() => {
+        if (opacity >= 1) {
+          clearInterval(fadeEffect);
+        } else {
+          opacity += 0.1;
+          element.style.opacity = opacity;
+        }
+      }, 30);
+    }
+
+    function mostrarSenha() {
+      fadeOut(content, () => {
+        content.innerHTML = `
+          <p>Você acertou! Agora, digite a senha mágica para continuar:</p>
+          <input type="password" id="senha" placeholder="Digite a senha..."><br>
+          <button id="avancar">Confirmar</button>
+        `;
+        buttons.innerHTML = "";
+        const btnConfirmar = document.getElementById("avancar");
+        btnConfirmar.onclick = () => {
+          const senha = document.getElementById("senha").value.trim().toLowerCase();
+          if (senha === "brava") {
+            successSound.play();
+            mostrarHistoria(0);
+          } else {
+            alert("Senha incorreta! Tente de novo.");
+            document.getElementById("senha").value = "";
+            document.getElementById("senha").focus();
+          }
+        };
+      });
+    }
+
+    // Etapa 2: história e pedido
+    const paginas = [
       `Eu sei que nem sempre fui o melhor pra você... Já errei demais, e muitas vezes joguei fora as chances que você me deu.<br><br>Mas sabe, de verdade, não foi por falta de amor, foi só que eu tava meio perdido às vezes.`,
       `Você tem esse jeitinho bravo, menina brava, que eu amo demais... Mesmo quando fica séria comigo, só mostra o quanto você se importa, e isso me inspira a ser melhor pra você.`,
-      `Por isso, hoje, aqui, eu faço um pedido diferente.<br><br>Se você disser "sim", prometo que vou fazer você a mulher mais feliz desse mundo. Tá pronta pra essa aventura comigo?`
+      `Por isso, hoje, aqui, eu faço um pedido diferente.<br><br>Se você disser "sim", prometo que vou fazer você a mulher mais feliz desse mundo. De verdade, sem brincadeira.`,
+      `<p>Desde o primeiro dia, mesmo de longe, você conquistou meu coração com o seu jeitinho único. Cada conversa, cada risada, cada momento contigo se tornou parte da história mais bonita que já vivi.</p>
+      <p>À distância, nosso amor provou que a conexão verdadeira não conhece barreiras. Mesmo separados por telas, te sinto perto em cada detalhe do meu dia. Você me inspira, me acalma e me faz querer ser melhor.</p>
+      <p style="font-size: 1.6em; color: #d6336c; font-weight: 700;">Quer namorar comigo? 💍💗</p>`
     ];
 
-    const paginaPedido = `
-      <p>Desde o primeiro dia, mesmo de longe, você conquistou meu coração com o seu jeitinho único. Cada conversa, cada risada, cada momento contigo se tornou parte da história mais bonita que já vivi.</p>
-      <p>À distância, nosso amor provou que a conexão verdadeira não conhece barreiras. Mesmo separados por telas, te sinto perto em cada detalhe do meu dia. Você me inspira, me acalma e me faz querer ser melhor.</p>
-      <p style="font-size: 1.6em; margin: 30px 0; color: #d6336c; font-weight: 700;">Quer namorar comigo? 💍💗</p>
-    `;
+    let pagina = 0;
 
-    let paginaAtual = 0;
+    function mostrarHistoria(i) {
+      fadeOut(content, () => {
+        content.innerHTML = paginas[i];
+        buttons.innerHTML = "";
 
-    function mostrarIntro(pagina) {
-      conteudo.innerHTML = paginasIntro[pagina];
-      botoes.innerHTML = '';
+        if (i < paginas.length - 1) {
+          const btn = document.createElement("button");
+          btn.id = "avancar";
+          btn.textContent = "Próximo";
+          btn.onclick = () => mostrarHistoria(i + 1);
+          buttons.appendChild(btn);
+        } else {
+          const btnSim = document.createElement("button");
+          btnSim.id = "sim";
+          btnSim.textContent = "Sim, quero!";
+          btnSim.onclick = mostrarFinal;
 
-      if (pagina > 0) {
-        const botaoVoltar = document.createElement('button');
-        botaoVoltar.textContent = 'Voltar';
-        botaoVoltar.onclick = () => {
-          paginaAtual--;
-          mostrarIntro(paginaAtual);
-        };
-        botoes.appendChild(botaoVoltar);
-      }
+          const btnNao = document.createElement("button");
+          btnNao.id = "nao";
+          btnNao.textContent = "Não, acho que não";
+          btnNao.onclick = respostaNao;
 
-      if (pagina < paginasIntro.length - 1) {
-        const botaoProximo = document.createElement('button');
-        botaoProximo.textContent = 'Próximo';
-        botaoProximo.onclick = () => {
-          paginaAtual++;
-          mostrarIntro(paginaAtual);
-        };
-        botoes.appendChild(botaoProximo);
-      } else {
-        const botaoContinuar = document.createElement('button');
-        botaoContinuar.textContent = 'Continuar';
-        botaoContinuar.onclick = () => {
-          mostrarPedido();
-        };
-        botoes.appendChild(botaoContinuar);
-      }
+          buttons.appendChild(btnSim);
+          buttons.appendChild(btnNao);
+        }
+        fadeIn(content);
+        fadeIn(buttons);
+      });
     }
 
-    function mostrarPedido() {
-      conteudo.innerHTML = paginaPedido;
-      botoes.innerHTML = '';
-
-      const botaoSim = document.createElement('button');
-      botaoSim.textContent = 'Sim, quero! 💖';
-      botaoSim.onclick = () => {
-        conteudo.innerHTML = `<h2 style='color: #d6336c;'>Você acaba de deixar alguém MUITO feliz! 🥹💘</h2><p>Prometo cuidar de você e fazer nossos dias inesquecíveis.</p><p style='font-size: 2em; margin-top: 40px;'>💍❤️</p>`;
-        botoes.innerHTML = '';
-      };
-
-      const botaoNao = document.createElement('button');
-      botaoNao.textContent = 'Não, acho que não';
-      botaoNao.onclick = respostaNao;
-
-      botoes.appendChild(botaoSim);
-      botoes.appendChild(botaoNao);
+    function mostrarFinal() {
+      fadeOut(content, () => {
+        content.innerHTML = `<h2 style="color: #d6336c;">Você acaba de deixar alguém MUITO feliz! 🥹💘</h2>
+        <p>Prometo cuidar de você e fazer nossos dias inesquecíveis.</p>
+        <p style="font-size: 2em; margin-top: 40px;">💍❤️</p>`;
+        buttons.innerHTML = "";
+        fadeIn(content);
+        confetti();
+      });
     }
 
-    let naoClickCount = 0;
+    let naoCount = 0;
+    const frasesNao = [
+      "Acho que clicou errado 😜",
+      "Tem certeza disso? 😳",
+      "Tá de brincadeira, né? 😂",
+      "Hmm... tenta de novo! 🙃",
+      "Última chance... 👀"
+    ];
+
     function respostaNao() {
-      const frases = [
-        'Ops! Parece que apertou no botão errado, bobinha! 😜',
-        'Opa, errou de novo! Tá difícil, hein? 😂',
-        'Sério mesmo? Vai tentar outra vez? Eu acredito! 😆',
-        'Tá teimando demais, viu! Mas tudo bem, tenta mais uma! 🤪',
-        'Ok, ok, última chance! Quero ver essa coragem! 😏'
-      ];
+      fadeOut(content, () => {
+        const msg = frasesNao[Math.min(naoCount, frasesNao.length - 1)];
+        naoCount++;
+        content.innerHTML = `<p style="font-size: 1.4em; color: #aa0033;">${msg}<br><br>Você ainda pode dizer SIM!</p>`;
+        buttons.innerHTML = "";
 
-      const msg = frases[Math.min(naoClickCount, frases.length - 1)];
-      naoClickCount++;
-
-      conteudo.innerHTML = `<p style="font-size: 1.4em; color: #aa0033;">${msg}<br><br>Dá pra tentar de novo, eu acredito em você!</p>`;
-      botoes.innerHTML = '';
-
-      const botaoTentar = document.createElement('button');
-      botaoTentar.textContent = 'Tentar de novo';
-      botaoTentar.onclick = () => {
-        if (naoClickCount >= frases.length) naoClickCount = 0;
-        mostrarPedido();
-      };
-
-      botoes.appendChild(botaoTentar);
+        const tentar = document.createElement("button");
+        tentar.id = "avancar";
+        tentar.textContent = "Tentar de novo";
+        tentar.onclick = () => mostrarHistoria(paginas.length - 1);
+        buttons.appendChild(tentar);
+        fadeIn(content);
+        fadeIn(buttons);
+      });
     }
+
+    // Confetti
+    function confetti() {
+      const colors = ["#d6336c", "#ff69b4", "#ff1493", "#e91e63"];
+      const confettiCount = 100;
+      confettiContainer.innerHTML = "";
+
+      for(let i = 0; i < confettiCount; i++) {
+        const confetto = document.createElement("div");
+        confetto.classList.add("confetti");
+        confetto.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        confetto.style.left = Math.random() * 100 + "%";
+        confetto.style.top = "-10px";
+        confetto.style.width = (5 + Math.random() * 7) + "px";
+        confetto.style.height = confetto.style.width;
+        confetto.style.animationDuration = (2 + Math.random() * 3) + "s";
+        confetto.style.animationDelay = (Math.random() * 5) + "s";
+        confettiContainer.appendChild(confetto);
+
+        // Remove confetti after animation
+        setTimeout(() => {
+          confetto.remove();
+        }, 6000);
+      }
+    }
+
+    // Inicializa
+    criarGrade();
   </script>
 </body>
 </html>
